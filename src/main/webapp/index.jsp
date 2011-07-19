@@ -1,10 +1,12 @@
 <%@ page import="com.buildndeploy.set.Deck" %>
 <%@ page import="com.buildndeploy.set.Card" %>
+<%@ page import="com.buildndeploy.set.Solver" %>
 <%@ page import="java.util.*" %>
 <%
 Deck deck = new Deck();
 deck.shuffle();
 List<Card> draw = deck.draw(12);
+List<int []> solutions = Solver.findSets(draw);
 %>
 
 <html>
@@ -18,6 +20,11 @@ List<Card> draw = deck.draw(12);
 				background: #fff;
 				color: #000;
 			}
+
+			#draw {
+				width: 450px;
+				height: 320px;
+			}
 		</style>
 	</head>
 
@@ -26,12 +33,14 @@ List<Card> draw = deck.draw(12);
 		
 		<h2>Draw</h2>
 		
-		<ul>
+		<div id="draw">
 		<% for (Card card : draw) { %>
-				<li><%= card %></li>
+			<img src="images/cards/card<%= card.getImageName() %>.png" width="144" height="72" />
 		<% } %>
-		</ul>
+		</div>
 		
+		<p>You can <a href="#solutions">view the solutions</a> at the bottom of this page.</p>
+				
 		<h2>About This Project</h2>
 
 		<p>This site is an example usage of the setlib library for playing the game of <a href="http://www.setgame.com/set/">Set</a>.</p>
@@ -53,5 +62,15 @@ List<Card> draw = deck.draw(12);
 		<p>Jenkins and site hosting provided by <a href="http://cloudbees.com/">CloudBees</a></p>
 
 		<p><a href="http://cloudbees.com/"><img src="http://web-static-cloudfront.s3.amazonaws.com/images/badges/BuiltOnDEV.png" width="128" height="92" /></a></p>
+
+		<h2 id="solutions"><%= solutions.size() %> Solutions</h2>
+		<% for (int[] indexes : solutions) { %>
+			<p>
+				<img src="images/cards/card<%= draw.get(indexes[0]).getImageName() %>.png" width="144" height="72" />
+				<img src="images/cards/card<%= draw.get(indexes[1]).getImageName() %>.png" width="144" height="72" />
+				<img src="images/cards/card<%= draw.get(indexes[2]).getImageName() %>.png" width="144" height="72" />
+			</p>
+		<% } %>
+
 	</body>
 </html>
