@@ -1,12 +1,13 @@
 <%@ page import="com.buildndeploy.set.Deck" %>
 <%@ page import="com.buildndeploy.set.Card" %>
 <%@ page import="com.buildndeploy.set.Solver" %>
+<%@ page import="com.buildndeploy.set.Set" %>
 <%@ page import="java.util.*" %>
 <%
 Deck deck = new Deck();
 deck.shuffle();
 List<Card> draw = deck.draw(12);
-List<int []> solutions = Solver.findSets(draw);
+List<Set> solutions = Solver.findSets(draw);
 %>
 
 <html>
@@ -64,11 +65,11 @@ List<int []> solutions = Solver.findSets(draw);
 		<p><a href="http://cloudbees.com/"><img src="http://web-static-cloudfront.s3.amazonaws.com/images/badges/BuiltOnDEV.png" width="128" height="92" /></a></p>
 
 		<h2 id="solutions"><%= solutions.size() %> Solutions</h2>
-		<% for (int[] indexes : solutions) { %>
+		<% for (Set set : solutions) { %>
 			<p>
-				<img src="images/cards/card<%= draw.get(indexes[0]).getImageName() %>.png" width="144" height="72" />
-				<img src="images/cards/card<%= draw.get(indexes[1]).getImageName() %>.png" width="144" height="72" />
-				<img src="images/cards/card<%= draw.get(indexes[2]).getImageName() %>.png" width="144" height="72" />
+				<img src="images/cards/card<%= set.getFirst().getImageName() %>.png" width="144" height="72" />
+				<img src="images/cards/card<%= set.getSecond().getImageName() %>.png" width="144" height="72" />
+				<img src="images/cards/card<%= set.getThird().getImageName() %>.png" width="144" height="72" />
 			</p>
 		<% } %>
 
