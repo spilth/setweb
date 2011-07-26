@@ -28,6 +28,17 @@ List<Set> solutions = Solver.findSets(draw);
 				initializeGame();
 			});
 		</script>
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-24168297-1']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
 	</head>
 
 	<body>
@@ -36,18 +47,20 @@ List<Set> solutions = Solver.findSets(draw);
 		<h1>SET</h1>
 		
 		<p>Select three cards in which each of the four features is either all the same on each card or all different on each card, when looked at individually. The four features are, symbol (oval, squiggle or diamond), color (red, purple or green), number (one, two or three) or shading (solid, shaded or clear).</p>
-				
-		<div id="draw">
-		<% for (Card card : draw) { %>
-			<img src="images/cards/card<%= card.getImageName() %>.png" width="216" height="108" class="card" id="<%= card.hashCode() %>"/>
-		<% } %>
-		</div>
+		
+		<div id="table">
+			<div id="draw">
+			<% for (Card card : draw) { %>
+				<img src="images/cards/card<%= card.getImageName() %>.png" width="216" height="108" class="card" id="<%= card.hashCode() %>"/>
+			<% } %>
+			</div>
 
-		<form>
-			<input type="button" id="set" value="Set!" />
-			<input type="button" id="reset" value="Reset"  />
-			<input type="button" id="showAnswers" value="Show/Hide Solutions" />
-		</form>
+			<form>
+				<input type="button" id="reset" value="Clear Selection"  />
+				<input type="button" id="set" value="Call Set!" />
+				<input type="button" id="showAnswers" value="Show/Hide Solutions" />
+			</form>
+		</div>
 
 		<div id="answers">
 		<h2><%= solutions.size() %> Solutions</h2>
