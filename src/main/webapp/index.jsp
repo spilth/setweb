@@ -56,12 +56,12 @@ List<Set> solutions = Solver.findSets(draw);
 				<img src="images/cards/card<%= card.getImageName() %>.png" width="216" height="108" class="card" id="<%= card.hashCode() %>"/>
 			<% } %>
 			</div>
-
-			<form>
-				<input type="button" id="reset" value="Clear Selection"  />
-				<input type="button" id="set" value="Call Set!" />
-				<input type="button" id="showAnswers" value="Show/Hide Solutions" />
-			</form>
+			
+			<p>
+			<button id="set">Call Set!</button>
+			<button id="reset">Clear Selection</button>
+			<button id="showAnswers">Show Solutions</button>
+			</p>
 		</div>
 
 		<div id="answers">

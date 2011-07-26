@@ -23,6 +23,13 @@ h1 {
 	width: 706px;
 }
 
+button {
+	width: 216px;
+	height: 5em;
+	padding: 1em;
+	font-size: 120%;
+}
+
 .card {
 	border: 8px solid #ccc;
 }
@@ -31,6 +38,3 @@ h1 {
 	border: 8px solid #00c;
 }
 
-#set, #reset, #showAnswers {
-	width: 216px;
-}

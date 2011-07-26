@@ -47,7 +47,10 @@ function drawCards() {
 }
 
 function showAnswers() {
-	$("#answers").fadeToggle();
+	$("#answers").toggle();
+	$("#showAnswers").text(
+		$("#answers").is(":visible") ? "Hide Answers" : "Show Answers"
+	);
 }
 
 function initializeGame(){
