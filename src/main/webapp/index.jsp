@@ -20,6 +20,7 @@ List<Set> solutions = Solver.findSets(draw);
 			$(document).ready(function(){
 				selectedCount = 0;
 
+				found = new Array();
 				solutions = new Array();
 				<% for (Set set : solutions) { %>
 					solutions.push("<%= set.getFirst().hashCode() %>-<%= set.getSecond().hashCode() %>-<%= set.getThird().hashCode() %>");
@@ -47,9 +48,8 @@ List<Set> solutions = Solver.findSets(draw);
 		<div id="main">
 		
 		<h1>SET</h1>
-		
-		<p>Select three cards in which each of the four features is either all the same on each card or all different on each card, when looked at individually. The four features are, symbol (oval, squiggle or diamond), color (red, purple or green), number (one, two or three) or shading (solid, shaded or clear).</p>
-		
+				
+		<div id="message"></div>
 		<div id="table">
 			<div id="draw">
 			<% for (Card card : draw) { %>
@@ -58,10 +58,21 @@ List<Set> solutions = Solver.findSets(draw);
 			</div>
 			
 			<p>
-			<button id="set">Call Set!</button>
-			<button id="reset">Clear Selection</button>
-			<button id="showAnswers">Show Solutions</button>
+			<button id="showAnswers">Show Answers</button>
 			</p>
+		</div>
+
+		<p>Select three cards in which each of the four features is either all the same on each card or all different on each card, when looked at individually. The four features are, symbol (oval, squiggle or diamond), color (red, purple or green), number (one, two or three) or shading (solid, shaded or clear).</p>
+
+
+
+		<div>
+		<h2>Sets Found</h2>
+			
+		<table id="found">
+			<tbody></tbody>
+		</table>
+				
 		</div>
 
 		<div id="answers">

@@ -10,19 +10,25 @@ function clickCard(card) {
 function checkSelectionCount() {
 	selectedCount = $(".selected").length;
 
-	$("#set").attr('disabled', (selectedCount == 3) ? false : true);
-	$("#reset").attr('disabled', (selectedCount == 0) ? true : false);
+	if (selectedCount == 3) {
+		checkSet();
+	}
 }
 
 function checkSet() {
 	if (solutions.length == 0) {
 		alert("Invalid Solution!");
 	}
-
-	// figure out which cards are selected
+	
 	var selectedCards = new Array();
 	var cards = document.getElementsByClassName("selected");
 	var solutionHash = cards[0].id + "-" + cards[1].id + "-" + cards[2].id;
+
+	if (found.indexOf(solutionHash) >= 0) {
+		showMessage("You already found that one!");
+		return;
+	}
+
 	var solved = false;
 	for (i = 0; i < solutions.length; i++) {
 		if (solutions[i] == solutionHash) {
@@ -31,10 +37,30 @@ function checkSet() {
 	}
 	
 	if (solved) {
-		alert("Solution found!");
+		found.push(solutionHash);
+		updateFound(solutionHash);
+		showMessage("Set Found!")
 	} else {
-		alert("Invalid solution!");
+		showMessage("Invalid set!");
 	}
+	resetSelection();
+}
+
+function showMessage(message) {
+	$("#message").text(message);
+	$("#message").fadeIn('slow').delay(500).fadeOut();
+}
+
+function updateFound(solutionHash) {
+	cardIds = solutionHash.split("-");
+	$("#found").find("tbody")
+		.append("<tr>")
+			.append("<td>")
+				.append($("#" + cardIds[0]).clone(false))
+				.append($("#" + cardIds[1]).clone(false))
+				.append($("#" + cardIds[2]).clone(false))
+			.append("</td>")
+		.append("</tr>");
 }
 
 function resetSelection() {
@@ -55,17 +81,10 @@ function showAnswers() {
 
 function initializeGame(){
 	$("#answers").hide();
+	$("#message").hide();
 
 	$(".card").click(function(){
 		clickCard(this);
-	});
-
-	$("#set").click(function(){
-		checkSet();
-	});
-
-	$("#reset").click(function() {
-		resetSelection();
 	});
 
 	$("#showAnswers").click(function() {
