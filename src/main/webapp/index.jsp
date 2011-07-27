@@ -58,7 +58,7 @@ List<Set> solutions = Solver.findSets(draw);
 			</div>
 			
 			<p>
-			<button id="showAnswers">Show Answers</button>
+			<button id="showSets">Show Sets</button>
 			</p>
 		</div>
 

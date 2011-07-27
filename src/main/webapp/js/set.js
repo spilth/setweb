@@ -4,6 +4,7 @@ function clickCard(card) {
 	} else if ($(card).hasClass("selected")) {
 		$(card).toggleClass("selected");
 	}
+	
 	checkSelectionCount();
 }
 
@@ -16,35 +17,42 @@ function checkSelectionCount() {
 }
 
 function checkSet() {
-	if (solutions.length == 0) {
-		alert("Invalid Solution!");
+	if (!setExists()) {
+		showMessage("Invalid Solution!");
+		return;
 	}
 	
-	var selectedCards = new Array();
 	var cards = document.getElementsByClassName("selected");
-	var solutionHash = cards[0].id + "-" + cards[1].id + "-" + cards[2].id;
+	var setHash = cards[0].id + "-" + cards[1].id + "-" + cards[2].id;
 
-	if (found.indexOf(solutionHash) >= 0) {
+	if (setAlreadyFound(setHash)) {
 		showMessage("You already found that one!");
 		resetSelection();
 		return;
 	}
-
-	var solved = false;
-	for (i = 0; i < solutions.length; i++) {
-		if (solutions[i] == solutionHash) {
-			solved = true;
-		}
-	}
 	
-	if (solved) {
-		found.push(solutionHash);
-		updateFound(solutionHash);
+	if (setIsValid(setHash)) {
+		found.push(setHash);
+		updateFound(cards);
 		showMessage("Set Found!")
+		
 	} else {
 		showMessage("Invalid set!");
 	}
+	
 	resetSelection();
+}
+
+function setExists() {
+	return (solutions.length > 0);
+}
+
+function setIsValid(setHash) {
+	return (solutions.indexOf(setHash) >= 0);
+}
+
+function setAlreadyFound(setHash) {
+	return (found.indexOf(setHash) >= 0);
 }
 
 function showMessage(message) {
@@ -52,31 +60,25 @@ function showMessage(message) {
 	$("#message").fadeIn('slow').delay(500).fadeOut();
 }
 
-function updateFound(solutionHash) {
-	cardIds = solutionHash.split("-");
+function updateFound(cards) {
 	$("#found").find("tbody")
 		.append("<tr>")
 			.append("<td>")
-				.append($("#" + cardIds[0]).clone(false))
-				.append($("#" + cardIds[1]).clone(false))
-				.append($("#" + cardIds[2]).clone(false))
+				.append($(cards[0]).clone(false))
+				.append($(cards[1]).clone(false))
+				.append($(cards[2]).clone(false))
 			.append("</td>")
 		.append("</tr>");
 }
 
 function resetSelection() {
 	$(".selected").toggleClass("selected");
-	checkSelectionCount();
 }
 
-function drawCards() {
-	alert("Drawing new cards...");
-}
-
-function showAnswers() {
+function showSets() {
 	$("#answers").toggle();
-	$("#showAnswers").text(
-		$("#answers").is(":visible") ? "Hide Answers" : "Show Answers"
+	$("#showSets").text(
+		$("#answers").is(":visible") ? "Hide Sets" : "Show Sets"
 	);
 }
 
@@ -88,8 +90,8 @@ function initializeGame(){
 		clickCard(this);
 	});
 
-	$("#showAnswers").click(function() {
-		showAnswers();
+	$("#showSets").click(function() {
+		showSets();
 	});
 
 	checkSelectionCount();
