@@ -26,6 +26,7 @@ function checkSet() {
 
 	if (found.indexOf(solutionHash) >= 0) {
 		showMessage("You already found that one!");
+		resetSelection();
 		return;
 	}
 
